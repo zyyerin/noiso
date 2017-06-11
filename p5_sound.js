@@ -24,7 +24,11 @@ function setup() {
     // angle
     a = 0;
     astep = random(1)-0.5;
-    sw = astep;
+    if(astep<0){
+        sw = -astep;
+    } else {
+        sw = astep;
+    }
     strokeWeight(sw);
     rectMode(CENTER);
     strokeAlpha = 255;
@@ -37,8 +41,6 @@ function setup() {
     relocationx = 0;
     relocationy = 0;
     cfill = 255;
-    
-    noisoIndex = 0;
 }
 
 function draw() {
@@ -51,7 +53,7 @@ function noisa() {
     let alpha = map(vol, 0, 1, 50, 255);
     stroke(255 - cfill, strokeAlpha / 2);
     strokeAlpha += sas;
-    if (strokeAlpha <= 0) {
+    if (strokeAlpha <= 1 || strokeAlpha >= 254) {
         sas *= -1;
     }
     fill(cfill, alpha);
@@ -90,6 +92,12 @@ function noisa() {
         a += 5;
     } else {
         a += astep;
+        while (a > 1000){
+            a -= 360;
+        }
+        while (a < -1000){
+            a+=360;
+        }
     }
 }
 
